@@ -24,7 +24,7 @@ Show all databases
 
 Connect to database
 
-    \c bikesbikesbikes
+    \c bouncev2
 
 ## Getting Started
 
