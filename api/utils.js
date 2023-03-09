@@ -50,10 +50,6 @@ const requiredNotSent = ({ requiredParams, atLeastOne = false }) => {
 
 // calculate total price of rental by taking the bounce id, rental dates, and price per day
 async function calculateRentalPrice(bouncer_id, rental_date_from, rental_date_to) {
-  console.log('bouncer_id in calculateRentalPrice', bouncer_id);
-  console.log('rental_date_from in calculateRentalPrice', rental_date_from);
-  console.log('rental_date_to in calculateRentalPrice', rental_date_to);
-
   try {
     const { rows: [bouncer] } = await client.query(`
       SELECT price
@@ -63,10 +59,17 @@ async function calculateRentalPrice(bouncer_id, rental_date_from, rental_date_to
 
     const price_per_day = bouncer.price;
 
-    const rentalDays = rental_date_to - rental_date_from;
+    const rentalDays = (rental_date_to - rental_date_from)+1;
 
-    // total price is rental days * price per day, but should always be at least one day
-    const total_price = Math.max(rentalDays, 1) * price_per_day;
+    const total_price = rentalDays * price_per_day;
+
+    // check that total price is not negative
+    if (total_price < 0) {
+      throw {
+        name: 'NegativePriceError',
+        message: 'Rental date to must be after rental date from'
+      }
+    }
 
     return total_price;
   } catch (error) {
