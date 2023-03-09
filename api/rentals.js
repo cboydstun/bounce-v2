@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const { getAllRentals,
     getRentalById,
-    createRental,
+    createNewRental,
     updateRentalById,
-    deleteRentalById, deleteAllRentals, getBikeById } = require('../db');
+    deleteRentalById,
+    getBouncerById, getBouncerPriceById } = require('../db');
 const { requireUser, calculateRentalPrice, checkRentalExists } = require('./utils');
 
 // GET /api/rentals - get all rentals
@@ -27,51 +28,61 @@ router.get('/:rentalId', async (req, res, next) => {
     }
 });
 
-// POST /api/rentals - create new rental
+// POST - api/rentals - create new rentals that gets user_id from JWT token and total_price from bouncer price times number of days
 router.post('/', requireUser, async (req, res, next) => {
     try {
-        // error handling
-        if (!req.body.bike_id || !req.body.rental_date_from || !req.body.rental_date_to) {
-            return res.status(422).send({ errors: [{ title: 'Data missing', detail: 'Provide bike_id, rental_date_from and rental_date_to' }] });
-        }
-
-        // check if bike exists
-        const bikeExists = await getBikeById(req.body.bike_id);
-        if (!bikeExists) {
-            return res.status(422).send({ errors: [{ title: 'Bike not found', detail: 'Bike does not exist' }] });
-        }
-
-        // check if rental exists
-        const rentalExists = await checkRentalExists(req.body.bike_id, req.body.rental_date_from);
-        if (rentalExists) {
-            return res.status(422).send({ errors: [{ title: 'Rental exists', detail: 'Rental already exists for this bike and dates' }] });
-        }
-
-        // check if rental is in the future
-        const rentalDateFrom = new Date(req.body.rental_date_from);
-        const rentalDateTo = new Date(req.body.rental_date_to);
-        const today = new Date();
-
-        if (rentalDateFrom < today) {
-            return res.status(422).send({ errors: [{ title: 'Rental date from is in the past', detail: 'Rental date from is in the past' }] });
-        }
-
-        if (rentalDateTo < today) {
-            return res.status(422).send({ errors: [{ title: 'Rental date to is in the past', detail: 'Rental date to is in the past' }] });
-        }
+        // destructuring req.body
+        const { bouncer_id, rental_date_from, rental_date_to } = req.body;
 
         // get user id from token
         const { id: user_id } = req.user;
 
-        // calculate total price of rental by taking the bike id, rental dates, and price per day
-        const { bike_id, rental_date_from, rental_date_to } = req.body;
+        // error handling
+        if (!bouncer_id || !rental_date_from || !rental_date_to) {
+            return res.status(400).send({ message: 'Please provide bouncer_id, rental_date_from, and rental_date_to' });
+        }
+
+        // check if bouncer exists
+        const bouncer = await getBouncerById(bouncer_id);
+        if (!bouncer) {
+            return res.status(400).send({ message: 'Bouncer does not exist' });
+        }
+
+        // check if rental exists
+        const rentalExists = await checkRentalExists(bouncer_id, rental_date_from, rental_date_to);
+        if (rentalExists) {
+            return res.status(400).send({ message: 'Rental already exists' });
+        }
+
+        // check if rental is in the past
+        const rentalDateFrom = new Date(rental_date_from);
+        const rentalDateTo = new Date(rental_date_to);
+        if (rentalDateFrom < new Date() || rentalDateTo < new Date()) {
+            return res.status(400).send({ message: 'Rental date cannot be in the past' });
+        }
+
+        // check if rental date from is before rental date to
+        if (rentalDateFrom > rentalDateTo) {
+            return res.status(400).send({ message: 'Rental date from cannot be after rental date to' });
+        }
+
+
 
         // calculate total price of rental
-        const total_price = await calculateRentalPrice(bike_id, rental_date_from, rental_date_to);
+        const total_price = await calculateRentalPrice(bouncer_id, rental_date_from, rental_date_to);
 
-        // create rental
-        const rental = await createRental({ bike_id, user_id, rental_date_from, rental_date_to, total_price });
+        console.log('total_price in rentals api', total_price);
 
+        // create new rental
+        const rental = await createNewRental({
+            bouncer_id,
+            rental_date_from,
+            rental_date_to,
+            total_price,
+            user_id
+        });
+
+        // send back rental
         res.send(rental);
     } catch (error) {
         throw error;
@@ -98,17 +109,6 @@ router.delete('/:rentalId', requireUser, async (req, res, next) => {
         throw error;
     }
 });
-
-// DELETE /api/rentals - delete all rentals
-router.delete('/', requireUser, async (req, res, next) => {
-    try {
-        const rentals = await deleteAllRentals();
-        res.send(rentals);
-    } catch (error) {
-        throw error;
-    }
-});
-
 
 // export router
 module.exports = router;

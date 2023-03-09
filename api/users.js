@@ -79,25 +79,4 @@ router.get('/me', requireUser, async (req, res, next) => {
   }
 })
 
-// GET /api/users/:userId/songs - get playlist by ID
-router.get('/:userId/songs', requireUser, async (req, res, next) => {
-  try {
-    const user = await getUserById(req.params.userId);
-    const playlist = await getPlaylistById(req.params.userId);
-
-    if (user && playlist) {
-      res.send(playlist);
-    } else {
-      next({
-        name: 'PlaylistNotFoundError',
-        message: 'That playlist does not exist'
-      });
-    }
-
-  } catch (error) {
-    next(error);
-  }
-})
-
-
 module.exports = router;

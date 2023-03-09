@@ -1,6 +1,6 @@
 const client = require('./client');
 
-const { createUser, createBike, createRentalData } = require('./');
+const { createUser, createBouncer, createRentalData } = require('./');
 
 // drop all tables if any exist
 async function dropTables() {
@@ -9,6 +9,7 @@ async function dropTables() {
         await client.query(`
             DROP TABLE IF EXISTS users CASCADE;
             DROP TABLE IF EXISTS rentals;
+            DROP TABLE IF EXISTS bouncers;
             DROP TABLE IF EXISTS bikes;
             `);
         console.log("Finished dropping tables!");
@@ -33,26 +34,28 @@ async function createTables() {
         `);
 
         await client.query(`
-        CREATE TABLE bikes (
+        CREATE TABLE bouncers (
             id SERIAL PRIMARY KEY,
-            color TEXT,
+            color TEXT UNIQUE,
             description TEXT,
             size TEXT,
-            price DECIMAL(10,2)
-          );
-      `);
+            price DECIMAL(10,2),
+            CONSTRAINT unique_color_size_price UNIQUE (color, size, price)
+            );     
+        `);
 
         await client.query(`
         CREATE TABLE rentals (
             id SERIAL PRIMARY KEY,
-            bike_id INTEGER REFERENCES bikes(id),
             user_id INTEGER REFERENCES users(id),
+            bouncer_id INTEGER REFERENCES bouncers(id),
             rental_date_from DATE,
             rental_date_to DATE,
             total_price DECIMAL(10,2),
-            CONSTRAINT unique_bike_rental_date_from UNIQUE (bike_id, rental_date_from)
-          );
+            CONSTRAINT unique_user_bouncer_rental_date UNIQUE (user_id, bouncer_id, rental_date_from, rental_date_to)
+            );
         `);
+
 
         console.log("Finished building tables!");
     } catch (error) {
@@ -79,72 +82,43 @@ async function createInitialUsers() {
     }
 }
 
-// async function to create initial users
-async function createInitialBikes() {
+// async function to create initial bouncers with color, description, size, and price
+async function createInitialBouncers() {
+    console.log('Starting to create bouncers...');
     try {
-        console.log("Starting to create bikes...");
 
-        const bikesToCreate = [
-            { color: "red", description: "A red bike", size: "small", price: 10.00 },
-            { color: "blue", description: "A blue bike", size: "medium", price: 20.00 },
-            { color: "green", description: "A green bike", size: "large", price: 30.00 },
-            { color: "yellow", description: "A yellow bike", size: "small", price: 10.00 },
-            { color: "orange", description: "An orange bike", size: "medium", price: 20.00 },
-            { color: "purple", description: "A purple bike", size: "large", price: 30.00 },
-            { color: "black", description: "A black bike", size: "small", price: 10.00 },
-            { color: "white", description: "A white bike", size: "medium", price: 20.00 },
-            { color: "grey", description: "A grey bike", size: "large", price: 30.00 },
-            { color: "brown", description: "A brown bike", size: "small", price: 10.00 },
-            { color: "pink", description: "A pink bike", size: "medium", price: 20.00 },
-            { color: "silver", description: "A silver bike", size: "large", price: 30.00 },
-            { color: "gold", description: "A gold bike", size: "small", price: 10.00 },
-            { color: "rainbow", description: "A rainbow bike", size: "medium", price: 20.00 }];
+        const bouncersToCreate = [
+            { color: "red", description: "red bouncer", size: "small", price: 100.00 },
+            { color: "blue", description: "blue bouncer", size: "medium", price: 120.00 },
+            { color: "green", description: "green bouncer", size: "large", price: 150.00 },
+        ]
+        const bouncers = await Promise.all(bouncersToCreate.map(createBouncer));
 
-        const bikes = await Promise.all(bikesToCreate.map(bike => {
-            return createBike({
-                color: bike.color,
-                description: bike.description,
-                size: bike.size,
-                price: bike.price
-            });
-        }));
-
-        console.log("Bikes created:");
-
+        console.log('Finished creating bouncers!');
     } catch (error) {
+        console.error('Error creating bouncers!');
         throw error;
     }
 }
 
-// async function to create initial artists
+// async function to create initial rentals
 async function createInitialRentals() {
+    console.log('Starting to create rentals...');
     try {
-        console.log("Starting to create rentals...");
-
-        // bike_id INTEGER REFERENCES bikes(id), user_id INTEGER REFERENCES users(id), rental_date_from DATE, rental_date_to DATE, total_price DECIMAL(10,2)
         const rentalsToCreate = [
-            { bike_id: 1, user_id: 2, rental_date_from: "2021-01-01", rental_date_to: "2021-01-02", total_price: 10.00 },
-            { bike_id: 2, user_id: 3, rental_date_from: "2021-01-01", rental_date_to: "2021-01-02", total_price: 20.00 },
-            { bike_id: 3, user_id: 1, rental_date_from: "2021-01-01", rental_date_to: "2021-01-02", total_price: 30.00 },
-        ];
+            { user_id: 1, bouncer_id: 1, rental_date_from: '2021-01-01', rental_date_to: '2021-01-02', total_price: 10.00 },
+            { user_id: 2, bouncer_id: 2, rental_date_from: '2021-01-01', rental_date_to: '2021-01-02', total_price: 20.00 },
+            { user_id: 3, bouncer_id: 3, rental_date_from: '2021-01-01', rental_date_to: '2021-01-02', total_price: 30.00 }
+        ]
 
-        const rentals = await Promise.all(rentalsToCreate.map(rental => {
-            return createRentalData({
-                bike_id: rental.bike_id,
-                user_id: rental.user_id,
-                rental_date_from: rental.rental_date_from,
-                rental_date_to: rental.rental_date_to,
-                total_price: rental.total_price
-            });
-        }));
+        const rentals = await Promise.all(rentalsToCreate.map(createRentalData));
 
-        console.log("Rentals created:");
-
+        console.log('Finished creating rentals!');
     } catch (error) {
+        console.error('Error creating rentals!');
         throw error;
     }
 }
-
 
 // rebuild function to drop tables, create tables, and create initial users
 async function rebuildDB() {
@@ -154,8 +128,10 @@ async function rebuildDB() {
         await dropTables();
         await createTables();
         await createInitialUsers();
-        await createInitialBikes();
+        await createInitialBouncers();
         await createInitialRentals();
+
+        client.end();
     } catch (error) {
         throw error;
     }

@@ -1,6 +1,6 @@
 const { Client } = require('pg');
 
-const connectionString = process.env.DATABASE_URL;
+const connectionString = "postgres://rtuhrvix:5QfA1fcaC0LPMJALPn9aqjDAUDG7Mk7L@fanny.db.elephantsql.com/rtuhrvix";
 
 const client = new Client({
   connectionString

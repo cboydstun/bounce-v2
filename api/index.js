@@ -59,9 +59,9 @@ router.use((req, res, next) => {
 const usersRouter = require('./users');
 router.use('/users', usersRouter);
 
-// ROUTER: /api/bikes
-const bikesRouter = require('./bikes');
-router.use('/bikes', bikesRouter);
+// ROUTER: /api/bouncers
+const bouncersRouter = require('./bouncers');
+router.use('/bouncers', bouncersRouter);
 
 // ROUTER: /api/rentals
 const rentalsRouter = require('./rentals');

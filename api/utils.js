@@ -48,43 +48,52 @@ const requiredNotSent = ({ requiredParams, atLeastOne = false }) => {
   }
 }
 
-// calculate total price of rental by taking the bike id, rental dates, and price per day
-async function calculateRentalPrice(bike_id, rental_date_from, rental_date_to) {
+// calculate total price of rental by taking the bounce id, rental dates, and price per day
+async function calculateRentalPrice(bouncer_id, rental_date_from, rental_date_to) {
+  console.log('bouncer_id in calculateRentalPrice', bouncer_id);
+  console.log('rental_date_from in calculateRentalPrice', rental_date_from);
+  console.log('rental_date_to in calculateRentalPrice', rental_date_to);
+
   try {
-
-    // get bike price per day
-    const { rows: [bike] } = await client.query(`
+    const { rows: [bouncer] } = await client.query(`
       SELECT price
-      FROM bikes
+      FROM bouncers
       WHERE id=$1
-    `, [bike_id]);
+    `, [bouncer_id]);
 
-    const price_per_day = bike.price;
-    const from = new Date(rental_date_from);
-    const to = new Date(rental_date_to);
-    const days = Math.ceil((to - from) / (1000 * 60 * 60 * 24));
+    const price_per_day = bouncer.price;
 
-    return price_per_day * days;
+    const rentalDays = rental_date_to - rental_date_from;
+
+    // total price is rental days * price per day, but should always be at least one day
+    const total_price = Math.max(rentalDays, 1) * price_per_day;
+
+    return total_price;
   } catch (error) {
     throw error;
   }
 }
 
-// check if a bike is already rented on a given date
-async function checkRentalExists(bike_id, rental_date_from) {
+
+// check if a bouncer is already rented on a given date
+async function checkRentalExists(bouncer_id, rental_date_from) {
   try {
-    const { rows: [rented] } = await client.query(`
+    const { rows: [rental] } = await client.query(`
       SELECT *
       FROM rentals
-      WHERE bike_id=$1
-      AND rental_date_from=$2
-    `, [bike_id, rental_date_from]);
+      WHERE bouncer_id=$1
+      AND rental_date_from <= $2
+      AND rental_date_to >= $2
+    `, [bouncer_id, rental_date_from]);
 
-    return rented;
+    return rental;
+
   } catch (error) {
     throw error;
   }
 }
+
+
 
 module.exports = {
   requireUser,
