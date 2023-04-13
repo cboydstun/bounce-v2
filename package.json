@@ -1,29 +1,25 @@
 {
-  "name": "bikesbikesbikes",
-  "version": "1.0.0",
-  "description": "an API for tracking bike rentals using node, express, and postgresql",
-  "main": "index.js",
+  "name": "next-ts-one",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "seed:dev": "nodemon ./db/seed.js",
-    "seed": "node ./db/seed.js",
-    "start:dev": "nodemon index.js",
-    "start": "node index.js",
-    "test": "jest --runInBand",
-    "test:watch": "jest --watchAll --runInBand"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.4"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "axios": "^0.19.2",
-    "bcrypt": "^4.0.1",
-    "chalk": "^4.0.0",
-    "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "jest": "^26.0.1",
-    "jsonwebtoken": "^8.5.1",
-    "morgan": "^1.10.0",
-    "pg": "^8.2.1"
+    "@types/node": "18.15.11",
+    "@types/react": "18.0.35",
+    "@types/react-dom": "18.0.11",
+    "eslint": "8.38.0",
+    "eslint-config-next": "13.3.0",
+    "next": "13.3.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "@types/gtag.js": "^0.0.12"
   }
 }

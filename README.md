@@ -59,10 +59,10 @@ Start Server
 | Method | Route       | Description               | Public | Parameters                                 |
 | ------ | ----------- | ------------------------- | ------ | ------------------------------------------ |
 | GET    | /bounce     | Returns all bounce houses | true   |                                            |
-| GET    | /bounce/:id | Returns a bike            | true   |                                            |
-| POST   | /bounce     | Creates a new bike        | false  | color, description, size, price, JWT Token |
-| PATCH  | /bounce/:id | Updates a bike            | false  | color, description, size, price, JWT Token |
-| DELETE | /bounce/:id | Deletes a bike            | false  | JWT Token                                  |
+| GET    | /bounce/:id | Returns a bouncer         | true   |                                            |
+| POST   | /bounce     | Creates a new bouncer     | false  | color, description, size, price, JWT Token |
+| PATCH  | /bounce/:id | Updates a bouncer         | false  | color, description, size, price, JWT Token |
+| DELETE | /bounce/:id | Deletes a bouncer         | false  | JWT Token                                  |
 | DELETE | /bounce     | Deletes all bounce houses | false  | JWT Token                                  |
 
 ### Rentals
@@ -75,3 +75,33 @@ Start Server
 | PATCH  | /rentals/:id | Updates a rental        | false  | bike_id, rental_date_from, rental_date_to, JWT Token |
 | DELETE | /rentals/:id | Deletes a rental        | false  | JWT Token                                            |
 | DELETE | /rentals     | Deletes all rentals     | false  | JWT Token                                            |
+
+## Todo List
+
+### Security
+
+- [] add helmet
+- [] add toobusy-js
+- [] add express-rate-limit
+- [] add xss-clean
+- [] add body-parser limit
+- [] add hsts to enforce https
+- [] add CSRF protection
+- [] add joi validation
+- [] add html-escape
+- [] add compression
+
+### Epic Features
+
+- [] add OAuth
+- [] add PayPal integration
+
+### Minor Features
+
+- [] add user profile dashboard
+- [] add user profile edit
+- [] add user profile delete
+- [] add user profile password change
+- [] add user profile password reset
+- [] add user profile password forgot
+- [] add user profile password forgot email
