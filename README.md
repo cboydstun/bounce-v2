@@ -1,107 +1,76 @@
-# SATX Bounce v2
+# Bounce v2
 
-an API and Next.js project for a party rental service using node, express, and postgresql
+A modern web application built with React, TypeScript, and Vite, featuring a comprehensive suite of features for business management and customer engagement.
 
-# PostgreSQL Setup
+## Tech Stack
 
-PostgreSQL should be installed and working at port 5432.
+- **Frontend Framework**: React 18 with TypeScript
+- **Build Tool**: Vite
+- **Styling**: TailwindCSS
+- **Testing**: Jest
+- **Linting**: ESLint
+- **Authentication**: Custom auth system with protected routes
 
-Login as "postgres" user
+## Features
 
-    sudo -u postgres psql ## on mac or linux
+- **Blog Management**: Full-featured blog system with rich text editing
+- **Product Management**: Product catalog with detailed views and admin controls
+- **Contact System**: Contact forms with admin management interface
+- **Admin Panel**: Secure administrative interface for content management
+- **Customer Reviews**: Display and management of customer feedback
+- **Authentication**: Secure login system with protected routes
+- **Responsive Design**: Mobile-friendly interface with modern UI components
 
-    or
+## Project Structure
 
-    psql -U postgres ## on windows
+```
+src/
+├── components/         # React components
+│   ├── blog/          # Blog-related components
+│   ├── product/       # Product-related components
+│   ├── contact/       # Contact form components
+│   └── ui/            # Reusable UI components
+├── contexts/          # React context providers
+├── hooks/             # Custom React hooks
+├── types/             # TypeScript type definitions
+├── utils/             # Utility functions
+└── data/             # Static data and configurations
+```
 
-Initialize new Database
+## Development
 
-    CREATE DATABASE bouncev2;
+1. Install dependencies:
 
-Show all databases
+```bash
+npm install
+```
 
-    \l
+2. Start development server:
 
-Connect to database
+```bash
+npm run dev
+```
 
-    \c bouncev2
+3. Run tests:
 
-## Getting Started
+```bash
+npm test
+```
 
-Clone the repository
+## Testing
 
-    git clone ...
+The project includes comprehensive test coverage using Jest. Test files are located alongside their corresponding components with the `.test.tsx` extension.
 
-Install Packages
+## Build
 
-    npm i
+To build for production:
 
-Seed Database
+```bash
+npm run build
+```
 
-    npm run seed
+This will generate optimized production files in the `dist` directory.
 
-Start Server
+## ESLint Configuration
 
-    npm run start:dev
-
-## API Endpoints
-
-### Users
-
-| Method | Route           | Description              | Public | Parameters               |
-| ------ | --------------- | ------------------------ | ------ | ------------------------ |
-| POST   | /users/register | Creates a new user       | true   | Name, Username, Password |
-| POST   | /users/login    | Logs in a user           | true   | Username, Password       |
-| GET    | /users/me       | Returns the current user | false  | JWT Token                |
-
-### Bounce
-
-| Method | Route       | Description               | Public | Parameters                                 |
-| ------ | ----------- | ------------------------- | ------ | ------------------------------------------ |
-| GET    | /bounce     | Returns all bounce houses | true   |                                            |
-| GET    | /bounce/:id | Returns a bouncer         | true   |                                            |
-| POST   | /bounce     | Creates a new bouncer     | false  | color, description, size, price, JWT Token |
-| PATCH  | /bounce/:id | Updates a bouncer         | false  | color, description, size, price, JWT Token |
-| DELETE | /bounce/:id | Deletes a bouncer         | false  | JWT Token                                  |
-| DELETE | /bounce     | Deletes all bounce houses | false  | JWT Token                                  |
-
-### Rentals
-
-| Method | Route        | Description             | Public | Parameters                                           |
-| ------ | ------------ | ----------------------- | ------ | ---------------------------------------------------- |
-| GET    | /rentals     | Returns all rentals     | false  | JWT Token                                            |
-| GET    | /rentals/:id | Returns a single rental | false  | JWT Token                                            |
-| POST   | /rentals     | Creates a new rental    | false  | bike_id, rental_date_from, rental_date_to, JWT token |
-| PATCH  | /rentals/:id | Updates a rental        | false  | bike_id, rental_date_from, rental_date_to, JWT Token |
-| DELETE | /rentals/:id | Deletes a rental        | false  | JWT Token                                            |
-| DELETE | /rentals     | Deletes all rentals     | false  | JWT Token                                            |
-
-## Todo List
-
-### Security
-
-- [] add helmet
-- [] add toobusy-js
-- [] add express-rate-limit
-- [] add xss-clean
-- [] add body-parser limit
-- [] add hsts to enforce https
-- [] add CSRF protection
-- [] add joi validation
-- [] add html-escape
-- [] add compression
-
-### Epic Features
-
-- [] add OAuth
-- [] add PayPal integration
-
-### Minor Features
-
-- [] add user profile dashboard
-- [] add user profile edit
-- [] add user profile delete
-- [] add user profile password change
-- [] add user profile password reset
-- [] add user profile password forgot
-- [] add user profile password forgot email
+The project uses ESLint with TypeScript support for code quality. Configuration can be found in `eslint.config.js`.
