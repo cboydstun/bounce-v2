@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import CustomerReviews from "./CustomerReviews";
 import ContactForm from "./ContactForm";
 import ProductCarousel from "./ProductCarousel";
@@ -131,13 +131,10 @@ const HomePage: React.FC = () => {
 
       {/* Occasions Section */}
       <div className="flex justify-center items-center py-4 my-4">
-
-      <div className="w-full max-w-[80%] bg-primary-blue rounded-xl px-8 py-8 text-center">
-
-      <OccasionsSection />
+        <div className="w-full max-w-[80%] bg-primary-blue rounded-xl px-8 py-8 text-center">
+          <OccasionsSection />
+        </div>
       </div>
-      </div>
-
 
       {/* Contact Form Section */}
       <div id="contact-form" className="container mx-auto px-4 py-16">

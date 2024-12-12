@@ -212,7 +212,8 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
       {/* Bouncer Selection */}
       <div>
         <label
-          htmlFor="bouncer"
+          id="bouncer-label"
+          htmlFor="bouncer-select"
           className="block text-lg font-medium text-gray-700 mb-2"
         >
           🎪 Select a Bouncer
@@ -223,10 +224,11 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
           <div className="text-red-500">{loadError}</div>
         ) : (
           <select
-            id="bouncer"
+            id="bouncer-select"
             name="bouncer"
             value={formData.bouncer}
             onChange={handleChange}
+            aria-labelledby="bouncer-label"
             className="w-full rounded-lg border-2 border-secondary-blue/20 shadow-sm focus:border-primary-purple focus:ring-primary-purple p-3"
           >
             <option value="">Choose a bouncer...</option>
@@ -275,6 +277,7 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
             onChange={handleChange}
             className="w-full rounded-lg border-2 border-secondary-blue/20 shadow-sm focus:border-primary-purple focus:ring-primary-purple p-3"
             placeholder="your@email.com"
+            autoComplete="email"
           />
           {errors.email && (
             <p className="text-red-500 text-sm mt-1">{errors.email}</p>
@@ -316,6 +319,7 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
             onChange={handleChange}
             className="w-full rounded-lg border-2 border-secondary-blue/20 shadow-sm focus:border-primary-purple focus:ring-primary-purple p-3"
             placeholder="Where's the party at?"
+            autoComplete="postal-code"
           />
           {errors.partyZipCode && (
             <p className="text-red-500 text-sm mt-1">{errors.partyZipCode}</p>
@@ -337,6 +341,7 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
             onChange={handleChange}
             className="w-full rounded-lg border-2 border-secondary-blue/20 shadow-sm focus:border-primary-purple focus:ring-primary-purple p-3"
             placeholder="Best number to reach you"
+            autoComplete="tel"
           />
           {errors.phone && (
             <p className="text-red-500 text-sm mt-1">{errors.phone}</p>

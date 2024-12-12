@@ -1,7 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Shield, Clock, Truck, Heart, Star, Phone } from "lucide-react";
-import { Helmet } from "react-helmet";
+import {
+  ArrowRight,
+  Shield,
+  Clock,
+  Truck,
+  Heart,
+  Star,
+  Phone,
+} from "lucide-react";
+import { Helmet } from "react-helmet-async";
 
 const AboutPage: React.FC = () => {
   // Organization structured data
@@ -100,49 +108,67 @@ const AboutPage: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div className="bg-white backdrop-blur-sm rounded-2xl p-6 transform transition-all duration-300">
                   <Shield className="w-12 h-12 text-blue-400 mb-4" />
-                  <h3 className="text-xl font-bold text-primary-purple mb-3">Safety First</h3>
+                  <h3 className="text-xl font-bold text-primary-purple mb-3">
+                    Safety First
+                  </h3>
                   <p className="text-primary-blue">
-                    We prioritize safety with meticulously maintained equipment and strict protocols for worry-free fun.
+                    We prioritize safety with meticulously maintained equipment
+                    and strict protocols for worry-free fun.
                   </p>
                 </div>
 
                 <div className="bg-white backdrop-blur-sm rounded-2xl p-6 transform transition-all duration-300">
                   <Clock className="w-12 h-12 text-purple-400 mb-4" />
-                  <h3 className="text-xl font-bold text-primary-purple mb-3">Reliable Service</h3>
+                  <h3 className="text-xl font-bold text-primary-purple mb-3">
+                    Reliable Service
+                  </h3>
                   <p className="text-primary-blue">
-                    Count on us for punctual delivery and setup, ensuring your event starts right on time.
+                    Count on us for punctual delivery and setup, ensuring your
+                    event starts right on time.
                   </p>
                 </div>
 
                 <div className="bg-white backdrop-blur-sm rounded-2xl p-6 transform transition-all duration-300">
                   <Truck className="w-12 h-12 text-blue-400 mb-4" />
-                  <h3 className="text-xl font-bold text-primary-purple mb-3">Free Delivery</h3>
+                  <h3 className="text-xl font-bold text-primary-purple mb-3">
+                    Free Delivery
+                  </h3>
                   <p className="text-primary-blue">
-                    Enjoy complimentary delivery within Loop 1604, making party planning easier and more affordable.
+                    Enjoy complimentary delivery within Loop 1604, making party
+                    planning easier and more affordable.
                   </p>
                 </div>
 
                 <div className="bg-white backdrop-blur-sm rounded-2xl p-6 transform transition-all duration-300">
                   <Heart className="w-12 h-12 text-purple-400 mb-4" />
-                  <h3 className="text-xl font-bold text-primary-purple mb-3">Customer Care</h3>
+                  <h3 className="text-xl font-bold text-primary-purple mb-3">
+                    Customer Care
+                  </h3>
                   <p className="text-primary-blue">
-                    We treat every customer like family, providing personalized attention and support.
+                    We treat every customer like family, providing personalized
+                    attention and support.
                   </p>
                 </div>
 
                 <div className="bg-white backdrop-blur-sm rounded-2xl p-6 transform transition-all duration-300">
                   <Star className="w-12 h-12 text-blue-400 mb-4" />
-                  <h3 className="text-xl font-bold text-primary-purple mb-3">Quality Equipment</h3>
+                  <h3 className="text-xl font-bold text-primary-purple mb-3">
+                    Quality Equipment
+                  </h3>
                   <p className="text-primary-blue">
-                    Premium, well-maintained inflatables and party equipment for the best experience.
+                    Premium, well-maintained inflatables and party equipment for
+                    the best experience.
                   </p>
                 </div>
 
                 <div className="bg-white backdrop-blur-sm rounded-2xl p-6 transform transition-all duration-300">
                   <Phone className="w-12 h-12 text-purple-400 mb-4" />
-                  <h3 className="text-xl font-bold text-primary-purple mb-3">24/7 Support</h3>
+                  <h3 className="text-xl font-bold text-primary-purple mb-3">
+                    24/7 Support
+                  </h3>
                   <p className="text-primary-blue">
-                    Always here when you need us, providing round-the-clock assistance for your peace of mind.
+                    Always here when you need us, providing round-the-clock
+                    assistance for your peace of mind.
                   </p>
                 </div>
               </div>
@@ -160,7 +186,9 @@ const AboutPage: React.FC = () => {
                   </h3>
                   <div className="space-y-4 text-primary-blue">
                     <p>
-                      Our customers are the essence of everything we do. We're unwavering in our mission to offer the peak of service, from initial booking to event day.
+                      Our customers are the essence of everything we do. We're
+                      unwavering in our mission to offer the peak of service,
+                      from initial booking to event day.
                     </p>
                   </div>
                 </div>
@@ -171,7 +199,8 @@ const AboutPage: React.FC = () => {
                   </h3>
                   <div className="space-y-4 text-primary-blue">
                     <p>
-                      No hidden fees or surprises. Our transparent pricing means you'll always know exactly what you're getting.
+                      No hidden fees or surprises. Our transparent pricing means
+                      you'll always know exactly what you're getting.
                     </p>
                   </div>
                 </div>
@@ -182,7 +211,9 @@ const AboutPage: React.FC = () => {
                   </h3>
                   <div className="space-y-4 text-primary-blue">
                     <p>
-                      We're proud to serve San Antonio and surrounding areas, contributing to countless memorable celebrations in our community.
+                      We're proud to serve San Antonio and surrounding areas,
+                      contributing to countless memorable celebrations in our
+                      community.
                     </p>
                   </div>
                 </div>
@@ -193,7 +224,8 @@ const AboutPage: React.FC = () => {
                   </h3>
                   <div className="space-y-4 text-primary-blue">
                     <p>
-                      We constantly update our inventory and improve our services based on customer feedback and industry trends.
+                      We constantly update our inventory and improve our
+                      services based on customer feedback and industry trends.
                     </p>
                   </div>
                 </div>

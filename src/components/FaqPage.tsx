@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Plus, Minus } from "lucide-react";
 import { useState } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const FaqPage: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);

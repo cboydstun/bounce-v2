@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import axios from "axios";
 import { getCloudinaryImageProps } from "../utils/cloudinary";
 import { ArrowLeft } from "lucide-react";
