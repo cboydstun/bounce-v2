@@ -2,7 +2,8 @@
 
 interface ImportMetaEnv {
   readonly VITE_API_URL: string
-  // Add other env variables here if needed
+  readonly VITE_GOOGLE_ANALYTICS_ID: string
+  readonly VITE_GTM_ID: string
 }
 
 interface ImportMeta {
