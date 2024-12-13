@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import axios from "axios";
 import { getApiUrl } from "../utils/env";
 
 interface Blog {
