@@ -16,7 +16,7 @@ interface Bouncer {
 }
 
 interface FormData {
-  bouncer: string;
+  bouncer: string; // This will now store the name instead of ID
   email: string;
   partyDate: string;
   partyZipCode: string;
@@ -45,8 +45,13 @@ interface ContactFormProps {
 }
 
 const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
+  // State to keep track of the selected bouncer ID for internal use
+  const [selectedBouncerId, setSelectedBouncerId] = useState<string>(
+    initialBouncerId || ""
+  );
+
   const [formData, setFormData] = useState<FormData>({
-    bouncer: initialBouncerId || "",
+    bouncer: "", // Will store the name
     email: "",
     partyDate: "",
     partyZipCode: "",
@@ -92,13 +97,14 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
 
         setBouncers(filteredBouncers);
 
-        // Set selected bouncer image if initialBouncerId is provided
+        // Set selected bouncer image and name if initialBouncerId is provided
         if (initialBouncerId) {
           const selectedBouncer = filteredBouncers.find(
             (b: Bouncer) => b._id === initialBouncerId
           );
-          if (selectedBouncer?.images[0]?.url) {
-            setSelectedBouncerImage(selectedBouncer.images[0].url);
+          if (selectedBouncer) {
+            setSelectedBouncerImage(selectedBouncer.images[0]?.url || "");
+            setFormData((prev) => ({ ...prev, bouncer: selectedBouncer.name }));
           }
         }
       } catch (error) {
@@ -165,6 +171,7 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
         overnight: false,
         consentToContact: false,
       });
+      setSelectedBouncerId("");
       setSelectedBouncerImage("");
     } catch (error) {
       setSubmitStatus("error");
@@ -179,14 +186,21 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-
     if (name === "bouncer") {
       const selectedBouncer = bouncers.find((b: Bouncer) => b._id === value);
-      setSelectedBouncerImage(selectedBouncer?.images[0]?.url || "");
+      if (selectedBouncer) {
+        setSelectedBouncerId(value);
+        setSelectedBouncerImage(selectedBouncer.images[0]?.url || "");
+        setFormData((prev) => ({
+          ...prev,
+          bouncer: selectedBouncer.name, // Store the name instead of ID
+        }));
+      }
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: type === "checkbox" ? checked : value,
+      }));
     }
   };
 
@@ -226,7 +240,7 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
           <select
             id="bouncer-select"
             name="bouncer"
-            value={formData.bouncer}
+            value={selectedBouncerId} // Use ID for selection
             onChange={handleChange}
             aria-labelledby="bouncer-label"
             className="w-full rounded-lg border-2 border-secondary-blue/20 shadow-sm focus:border-primary-purple focus:ring-primary-purple p-3"
