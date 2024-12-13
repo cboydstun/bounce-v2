@@ -6,6 +6,7 @@ import {
   useEffect,
 } from "react";
 import axios from "axios";
+import { getApiUrl } from "../utils/env";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -17,6 +18,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const API_URL = getApiUrl();
 
   useEffect(() => {
     // Check if we have a token in localStorage
@@ -30,7 +32,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await axios.post("/api/v1/users/login", {
+      const response = await axios.post(`${API_URL}/api/v1/users/login`, {
         email,
         password,
       });
