@@ -16,7 +16,7 @@ interface Bouncer {
 }
 
 interface FormData {
-  bouncer: string; // This will now store the name instead of ID
+  bouncer: string;
   email: string;
   partyDate: string;
   partyZipCode: string;
@@ -45,13 +45,8 @@ interface ContactFormProps {
 }
 
 const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
-  // State to keep track of the selected bouncer ID for internal use
-  const [selectedBouncerId, setSelectedBouncerId] = useState<string>(
-    initialBouncerId || ""
-  );
-
   const [formData, setFormData] = useState<FormData>({
-    bouncer: "", // Will store the name
+    bouncer: "",
     email: "",
     partyDate: "",
     partyZipCode: "",
@@ -103,8 +98,13 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
             (b: Bouncer) => b._id === initialBouncerId
           );
           if (selectedBouncer) {
-            setSelectedBouncerImage(selectedBouncer.images[0]?.url || "");
-            setFormData((prev) => ({ ...prev, bouncer: selectedBouncer.name }));
+            if (selectedBouncer.images[0]?.url) {
+              setSelectedBouncerImage(selectedBouncer.images[0].url);
+            }
+            setFormData((prev) => ({
+              ...prev,
+              bouncer: selectedBouncer.name,
+            }));
           }
         }
       } catch (error) {
@@ -171,7 +171,6 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
         overnight: false,
         consentToContact: false,
       });
-      setSelectedBouncerId("");
       setSelectedBouncerImage("");
     } catch (error) {
       setSubmitStatus("error");
@@ -189,11 +188,10 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
     if (name === "bouncer") {
       const selectedBouncer = bouncers.find((b: Bouncer) => b._id === value);
       if (selectedBouncer) {
-        setSelectedBouncerId(value);
         setSelectedBouncerImage(selectedBouncer.images[0]?.url || "");
         setFormData((prev) => ({
           ...prev,
-          bouncer: selectedBouncer.name, // Store the name instead of ID
+          bouncer: selectedBouncer.name, // Store the name instead of _id
         }));
       }
     } else {
@@ -240,7 +238,7 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
           <select
             id="bouncer-select"
             name="bouncer"
-            value={selectedBouncerId} // Use ID for selection
+            value={bouncers.find((b) => b.name === formData.bouncer)?._id || ""} // Match by name to _id for select value
             onChange={handleChange}
             aria-labelledby="bouncer-label"
             className="w-full rounded-lg border-2 border-secondary-blue/20 shadow-sm focus:border-primary-purple focus:ring-primary-purple p-3"
