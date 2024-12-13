@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpDown, Filter, X } from "lucide-react";
 import { Helmet } from "react-helmet-async";
+import { getApiUrl } from "../../utils/env";
 
 interface Product {
   _id: string;
@@ -47,6 +48,7 @@ export default function ProductList() {
   const [sortAscending, setSortAscending] = useState(false);
   const [selectedType, setSelectedType] = useState<FilterType>("DRY");
   const [showFilters, setShowFilters] = useState(false);
+  const API_URL = getApiUrl();
 
   // Filter states
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
@@ -80,7 +82,7 @@ export default function ProductList() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("/api/v1/products");
+        const response = await fetch(`${API_URL}/api/v1/products`);
         if (!response.ok) {
           throw new Error("Failed to fetch products");
         }

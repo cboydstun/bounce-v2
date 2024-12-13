@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import axios from "axios";
+import { getApiUrl } from "../utils/env";
 
 interface Blog {
   _id: string;
@@ -17,6 +18,7 @@ const BlogList = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const API_URL = getApiUrl();
 
   // Create blog listing structured data
   const createBlogListingSchema = (blogs: Blog[]) => {
@@ -43,17 +45,19 @@ const BlogList = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get("/api/v1/blogs");
-        setBlogs(response.data);
-        setLoading(false);
+        const response = await fetch(`${API_URL}/api/v1/blogs`);
+        if (!response.ok) throw new Error("Failed to fetch blogs");
+        const data = await response.json();
+        setBlogs(data);
       } catch (err) {
-        setError("Failed to fetch blogs");
+        setError(err instanceof Error ? err.message : "An error occurred");
+      } finally {
         setLoading(false);
       }
     };
 
     fetchBlogs();
-  }, []);
+  }, [API_URL]);
 
   if (loading) {
     return (
