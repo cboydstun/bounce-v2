@@ -321,7 +321,7 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
             htmlFor="partyZipCode"
             className="block text-lg font-medium text-gray-700 mb-2"
           >
-            📍 Party Location (Zip Code)
+            📍 Party Zip Code
           </label>
           <input
             type="text"
