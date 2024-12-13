@@ -99,5 +99,3 @@ This will generate optimized production files in the `dist` directory.
 - `jest.config.ts`: Jest test configuration
 - `vite.config.ts`: Vite build configuration
 - `vercel.json`: Vercel deployment configuration
-
-update
