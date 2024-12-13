@@ -4,36 +4,57 @@
   "framework": "vite",
   "routes": [
     {
+      "src": "^/assets/.*\\.js$",
+      "headers": { "content-type": "application/javascript" },
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "^/assets/.*\\.css$",
+      "headers": { "content-type": "text/css" },
+      "dest": "/assets/$1"
+    },
+    {
       "src": "/og-image\\.jpg",
+      "headers": { "content-type": "image/jpeg" },
       "dest": "/og-image.jpg"
     },
     {
       "src": "^/favicon\\.ico",
+      "headers": { "content-type": "image/x-icon" },
       "dest": "/favicon.ico"
     },
     {
       "src": "^/manifest\\.json",
+      "headers": { "content-type": "application/json" },
       "dest": "/manifest.json"
     },
     {
       "src": "^/robots\\.txt",
+      "headers": { "content-type": "text/plain" },
       "dest": "/robots.txt"
     },
     {
       "src": "^/sitemap\\.xml",
+      "headers": { "content-type": "application/xml" },
       "dest": "/sitemap.xml"
     },
     {
       "src": "^/apple-touch-icon\\.png",
+      "headers": { "content-type": "image/png" },
       "dest": "/apple-touch-icon.png"
     },
     {
-      "src": "^/logo.*\\.png",
+      "src": "^/logo.*\\.png$",
+      "headers": { "content-type": "image/png" },
       "dest": "/logo$1.png"
     },
     {
       "src": "^/twitter-image\\.jpg",
+      "headers": { "content-type": "image/jpeg" },
       "dest": "/twitter-image.jpg"
+    },
+    {
+      "handle": "filesystem"
     },
     {
       "src": "/(.*)",
