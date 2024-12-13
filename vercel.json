@@ -2,10 +2,42 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
-  "rewrites": [
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "/og-image\\.jpg",
+      "dest": "/og-image.jpg"
+    },
+    {
+      "src": "^/favicon\\.ico",
+      "dest": "/favicon.ico"
+    },
+    {
+      "src": "^/manifest\\.json",
+      "dest": "/manifest.json"
+    },
+    {
+      "src": "^/robots\\.txt",
+      "dest": "/robots.txt"
+    },
+    {
+      "src": "^/sitemap\\.xml",
+      "dest": "/sitemap.xml"
+    },
+    {
+      "src": "^/apple-touch-icon\\.png",
+      "dest": "/apple-touch-icon.png"
+    },
+    {
+      "src": "^/logo.*\\.png",
+      "dest": "/logo$1.png"
+    },
+    {
+      "src": "^/twitter-image\\.jpg",
+      "dest": "/twitter-image.jpg"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
