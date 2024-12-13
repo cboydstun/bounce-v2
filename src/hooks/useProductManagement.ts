@@ -1,17 +1,20 @@
 import { useState, useCallback } from 'react';
 import axios from 'axios';
 import { Product } from '../types/product';
+import { getApiUrl } from "../utils/env";
 
 export const useProductManagement = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const API_URL = getApiUrl();
+
 
     const fetchProducts = useCallback(async () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get('/api/v1/products', {
+            const response = await axios.get(`${API_URL}/api/v1/products`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
@@ -27,7 +30,7 @@ export const useProductManagement = () => {
     const createProduct = async (formData: FormData) => {
         setError(null);
         try {
-            await axios.post('/api/v1/products', formData, {
+            await axios.post(`${API_URL}/api/v1/products`, formData, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'multipart/form-data'
@@ -45,7 +48,7 @@ export const useProductManagement = () => {
     const updateProduct = async (slug: string, formData: FormData) => {
         setError(null);
         try {
-            await axios.put(`/api/v1/products/${slug}`, formData, {
+            await axios.put(`${API_URL}/api/v1/products/${slug}`, formData, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'multipart/form-data'
@@ -63,7 +66,7 @@ export const useProductManagement = () => {
     const deleteProduct = async (slug: string) => {
         setError(null);
         try {
-            await axios.delete(`/api/v1/products/${slug}`, {
+            await axios.delete(`${API_URL}/api/v1/products/${slug}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
@@ -80,7 +83,7 @@ export const useProductManagement = () => {
     const deleteImage = async (slug: string, public_id: string) => {
         setError(null);
         try {
-            await axios.delete(`/api/v1/products/${slug}/images/${public_id}`, {
+            await axios.delete(`${API_URL}/api/v1/products/${slug}/images/${public_id}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }

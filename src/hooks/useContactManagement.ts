@@ -1,15 +1,17 @@
 import { useState, useCallback } from 'react';
 import axios from 'axios';
 import { Contact } from '../types/contact';
+import { getApiUrl } from "../utils/env";
 
 export function useContactManagement() {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const API_URL = getApiUrl();
 
   const fetchContacts = useCallback(async () => {
     try {
-      const response = await axios.get("/api/v1/contacts");
+      const response = await axios.get(`${API_URL}/api/v1/contacts`);
       setContacts(response.data);
       setLoading(false);
       setError(null);
@@ -21,7 +23,7 @@ export function useContactManagement() {
 
   const updateContact = useCallback(async (id: string, data: Partial<Contact>) => {
     try {
-      await axios.put(`/api/v1/contacts/${id}`, data, {
+      await axios.put(`${API_URL}/api/v1/contacts/${id}`, data, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -37,7 +39,7 @@ export function useContactManagement() {
 
   const deleteContact = useCallback(async (id: string) => {
     try {
-      await axios.delete(`/api/v1/contacts/${id}`);
+      await axios.delete(`${API_URL}/api/v1/contacts/${id}`);
       await fetchContacts();
       return true;
     } catch (err) {

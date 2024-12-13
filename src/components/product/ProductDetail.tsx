@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import ContactForm from "../ContactForm";
+import { getApiUrl } from "../../utils/env";
 
 interface Product {
   _id: string;
@@ -36,11 +37,12 @@ export default function ProductDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const API_URL = getApiUrl();
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`/api/v1/products/${slug}`);
+        const response = await fetch(`${API_URL}/api/v1/products/${slug}`);
         if (!response.ok) {
           throw new Error("Product not found");
         }
