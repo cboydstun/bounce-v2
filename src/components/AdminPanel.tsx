@@ -13,6 +13,7 @@ import ProductForm from "./product/ProductForm";
 import ProductTable from "./product/ProductTable";
 import ContactForm from "./contact/ContactForm";
 import ContactTable from "./contact/ContactTable";
+import { LoadingSpinner } from "./ui/LoadingSpinner";
 
 type ActivePanel = "blogs" | "products" | "contacts";
 
@@ -133,7 +134,7 @@ export default function AdminPanel() {
   if (blogsLoading || productsLoading || contactsLoading) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-xl text-gray-600">Loading...</div>
+        <LoadingSpinner color="#3B82F6" size={60} />
       </div>
     );
   }

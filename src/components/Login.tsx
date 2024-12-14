@@ -1,6 +1,7 @@
 import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { LoadingSpinner } from "./ui/LoadingSpinner";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -83,7 +84,11 @@ export default function Login() {
                   : "bg-primary-purple hover:bg-primary-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-purple"
               }`}
             >
-              {isLoading ? "Signing in..." : "Sign in to Admin Panel"}
+              {isLoading ? (
+                <LoadingSpinner color="#ffffff" size={20} />
+              ) : (
+                "Sign in to Admin Panel"
+              )}
             </button>
           </div>
         </form>

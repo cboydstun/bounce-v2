@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import ContactForm from "../ContactForm";
 import { getApiUrl } from "../../utils/env";
+import { LoadingSpinner } from "../ui/LoadingSpinner";
 
 interface Product {
   _id: string;
@@ -71,9 +72,7 @@ export default function ProductDetail() {
           <meta name="description" content="Loading product details..." />
         </Helmet>
         <div className="min-h-screen flex justify-center items-center">
-          <p className="text-primary-blue font-semibold text-lg">
-            Loading product details...
-          </p>
+          <LoadingSpinner color="#3B82F6" size={60} />
         </div>
       </>
     );

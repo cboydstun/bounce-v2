@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { getApiUrl } from "../utils/env";
 import { Product, Specification } from "../types/product";
+import { LoadingSpinner } from "./ui/LoadingSpinner";
 
 const ProductCarousel = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -59,8 +60,8 @@ const ProductCarousel = () => {
 
   if (loading)
     return (
-      <div className="text-center text-primary-blue font-semibold">
-        Loading products...
+      <div className="w-full bg-[#663399] py-12 rounded-b-xl">
+        <LoadingSpinner color="#ffffff" />
       </div>
     );
   if (error)
@@ -82,7 +83,7 @@ const ProductCarousel = () => {
 
   return (
     <div className="w-full bg-[#663399] py-12 rounded-b-xl">
-    <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-8 text-white">
           Featured Products
         </h2>

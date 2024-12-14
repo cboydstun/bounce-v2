@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { getApiUrl } from "../utils/env";
+import { LoadingSpinner } from "./ui/LoadingSpinner";
 
 interface Specification {
   name: string;
@@ -231,7 +232,9 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
           🎪 Select a Bouncer
         </label>
         {isLoading ? (
-          <div className="text-gray-500">Loading bouncers...</div>
+          <div className="flex justify-center">
+            <LoadingSpinner color="#3B82F6" size={30} />
+          </div>
         ) : loadError ? (
           <div className="text-red-500">{loadError}</div>
         ) : (

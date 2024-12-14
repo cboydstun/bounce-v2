@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowUpDown, Filter, X } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { getApiUrl } from "../../utils/env";
+import { LoadingSpinner } from "../ui/LoadingSpinner";
 
 interface Product {
   _id: string;
@@ -148,9 +149,7 @@ export default function ProductList() {
           />
         </Helmet>
         <div className="min-h-screen flex justify-center items-center">
-          <p className="text-primary-blue font-semibold text-lg">
-            Loading products...
-          </p>
+          <LoadingSpinner color="#3B82F6" size={60} />
         </div>
       </>
     );

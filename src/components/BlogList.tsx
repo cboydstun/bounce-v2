@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { getApiUrl } from "../utils/env";
+import { LoadingSpinner } from "./ui/LoadingSpinner";
 
 interface Blog {
   _id: string;
@@ -69,10 +70,7 @@ const BlogList = () => {
           />
         </Helmet>
         <div className="min-h-[400px] flex justify-center items-center">
-          <div
-            data-testid="loading-spinner"
-            className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-blue"
-          />
+          <LoadingSpinner color="#3B82F6" size={48} />
         </div>
       </>
     );
