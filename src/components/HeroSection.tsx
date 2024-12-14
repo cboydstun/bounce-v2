@@ -14,7 +14,7 @@ const HeroSection: React.FC = () => {
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          transform: "scale(1.1)", // Slight scale for parallax effect
+          transform: "scale(1.1)",
         }}
       />
 
@@ -40,7 +40,7 @@ const HeroSection: React.FC = () => {
       </div>
 
       {/* Content Container */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 py-20 text-center">
+      <div className="relative z-20 w-full max-w-7xl mx-auto px-4 py-20 text-center">
         <h1 className="text-6xl md:text-8xl font-extrabold mb-6 text-white animate-fade-in-down drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
           San Antonio's Premier
           <span className="block mt-2 bg-gradient-to-r from-blue-400 to-purple-600 text-transparent bg-clip-text animate-pulse">
@@ -58,7 +58,7 @@ const HeroSection: React.FC = () => {
           </span>
         </p>
 
-        <div className="flex flex-col sm:flex-row justify-center gap-6 animate-fade-in-up">
+        <div className="flex flex-col sm:flex-row justify-center gap-6 animate-fade-in-up mb-16 sm:mb-0">
           <a
             href="#contact-form"
             className="group relative px-8 py-4 bg-blue-600 text-white text-lg font-bold rounded-xl overflow-hidden transition-all duration-300 hover:bg-blue-700 hover:scale-105 hover:shadow-xl"
@@ -77,9 +77,10 @@ const HeroSection: React.FC = () => {
         </div>
       </div>
 
+      {/* Bottom Gradient and Wave */}
       <div className="absolute bottom-0 left-0 right-0 w-full">
         <div
-          className="absolute bottom-0 left-0 right-0 h-48 z-10"
+          className="absolute bottom-0 left-0 right-0 h-48"
           style={{
             background: "linear-gradient(to top, #663399, transparent)",
           }}
@@ -93,7 +94,7 @@ const HeroSection: React.FC = () => {
         >
           <path
             d="M0,0 Q600,120 1200,0 L1200,120 L0,120 Z"
-            className="bg-transparent"
+            fill="#663399" // Added fill color to match gradient
           ></path>
         </svg>
       </div>
