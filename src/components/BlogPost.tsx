@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import axios from "axios";
 import { getCloudinaryImageProps } from "../utils/cloudinary";
 import { ArrowLeft } from "lucide-react";
+import { LoadingSpinner } from "./ui/LoadingSpinner";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -122,10 +123,7 @@ const BlogPost = () => {
           <meta name="description" content="Loading blog post content..." />
         </Helmet>
         <div className="min-h-[400px] flex justify-center items-center">
-          <div
-            data-testid="loading-spinner"
-            className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-blue"
-          />
+          <LoadingSpinner color="#3B82F6" size={48} />
         </div>
       </>
     );
