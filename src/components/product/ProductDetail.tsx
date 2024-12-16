@@ -141,7 +141,7 @@ export default function ProductDetail() {
                   <img
                     src={selectedImage || product.images[0]?.url}
                     alt={product.name}
-                    className="w-full h-[400px] object-cover transition-transform duration-300 hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                   />
                 </div>
                 {product.images.length > 1 && (

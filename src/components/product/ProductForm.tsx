@@ -29,8 +29,8 @@ interface ImagePreview {
 const generateSlug = (name: string): string => {
   return name
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '');
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 };
 
 export default function ProductForm({
@@ -38,9 +38,7 @@ export default function ProductForm({
   onCancel,
   initialData,
 }: ProductFormProps) {
-
   const [formData, setFormData] = useState<ProductFormData>(() => {
-    
     // Initialize with initialData if available, otherwise use defaults
     if (initialData) {
       return {
@@ -71,14 +69,19 @@ export default function ProductForm({
         features: initialData.features || [],
         safetyGuidelines: initialData.safetyGuidelines || "",
         maintenanceSchedule: {
-          lastMaintenance: initialData.maintenanceSchedule?.lastMaintenance || new Date().toISOString(),
-          nextMaintenance: initialData.maintenanceSchedule?.nextMaintenance || new Date().toISOString(),
+          lastMaintenance:
+            initialData.maintenanceSchedule?.lastMaintenance ||
+            new Date().toISOString(),
+          nextMaintenance:
+            initialData.maintenanceSchedule?.nextMaintenance ||
+            new Date().toISOString(),
         },
         weatherRestrictions: initialData.weatherRestrictions || [],
         additionalServices: initialData.additionalServices || [],
         specifications: initialData.specifications || [],
         images: initialData.images || [],
-        rentalDuration: (initialData.rentalDuration as RentalDuration) || "full-day",
+        rentalDuration:
+          (initialData.rentalDuration as RentalDuration) || "full-day",
         availability: (initialData.availability as Availability) || "available",
       };
     }
@@ -130,7 +133,6 @@ export default function ProductForm({
 
   // Handle image previews initialization
   useEffect(() => {
-    
     if (initialData) {
       // Create a deep copy of initialData to avoid reference issues
       const formattedData = {
@@ -161,14 +163,19 @@ export default function ProductForm({
         features: initialData.features || [],
         safetyGuidelines: initialData.safetyGuidelines || "",
         maintenanceSchedule: {
-          lastMaintenance: initialData.maintenanceSchedule?.lastMaintenance || new Date().toISOString(),
-          nextMaintenance: initialData.maintenanceSchedule?.nextMaintenance || new Date().toISOString(),
+          lastMaintenance:
+            initialData.maintenanceSchedule?.lastMaintenance ||
+            new Date().toISOString(),
+          nextMaintenance:
+            initialData.maintenanceSchedule?.nextMaintenance ||
+            new Date().toISOString(),
         },
         weatherRestrictions: initialData.weatherRestrictions || [],
         additionalServices: initialData.additionalServices || [],
         specifications: initialData.specifications || [],
         images: initialData.images || [],
-        rentalDuration: (initialData.rentalDuration as RentalDuration) || "full-day",
+        rentalDuration:
+          (initialData.rentalDuration as RentalDuration) || "full-day",
         availability: (initialData.availability as Availability) || "available",
       };
 
@@ -223,7 +230,7 @@ export default function ProductForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const submitFormData = new FormData();
 
     // Add product data
@@ -280,23 +287,31 @@ export default function ProductForm({
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Category</label>
+        <label className="block text-sm font-medium text-gray-700">
+          Category
+        </label>
         <input
           type="text"
           value={formData.category}
-          onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, category: e.target.value })
+          }
           required
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-purple focus:ring-primary-purple sm:text-sm"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Description</label>
+        <label className="block text-sm font-medium text-gray-700">
+          Description
+        </label>
         <div className="prose max-w-full">
           <ReactQuill
             theme="snow"
             value={formData.description}
-            onChange={(content) => setFormData({ ...formData, description: content })}
+            onChange={(content) =>
+              setFormData({ ...formData, description: content })
+            }
             modules={modules}
             formats={formats}
             className="bg-white"
@@ -304,8 +319,8 @@ export default function ProductForm({
         </div>
       </div>
 
-     {/* Price */}
-     <div className="grid grid-cols-2 gap-4">
+      {/* Price */}
+      <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
             Price
@@ -623,7 +638,9 @@ export default function ProductForm({
           onChange={(e) =>
             setFormData({
               ...formData,
-              weatherRestrictions: e.target.value.split(",").map((s) => s.trim()),
+              weatherRestrictions: e.target.value
+                .split(",")
+                .map((s) => s.trim()),
             })
           }
           placeholder="e.g., No use in rain, Wind under 15mph"
@@ -664,7 +681,9 @@ export default function ProductForm({
               <button
                 type="button"
                 onClick={() => {
-                  const newSpecs = formData.specifications.filter((_: Specification, i: number) => i !== index);
+                  const newSpecs = formData.specifications.filter(
+                    (_: Specification, i: number) => i !== index
+                  );
                   setFormData({ ...formData, specifications: newSpecs });
                 }}
                 className="mt-1 px-2 py-1 bg-red-500 text-white rounded"
@@ -678,7 +697,10 @@ export default function ProductForm({
             onClick={() => {
               setFormData({
                 ...formData,
-                specifications: [...formData.specifications, { name: "", value: "" }],
+                specifications: [
+                  ...formData.specifications,
+                  { name: "", value: "" },
+                ],
               });
             }}
             className="mt-2 px-4 py-2 bg-primary-purple text-white rounded"
@@ -694,48 +716,67 @@ export default function ProductForm({
           Additional Services
         </label>
         <div className="space-y-2">
-          {formData.additionalServices.map((service: AdditionalService, index: number) => (
-            <div key={index} className="flex gap-2">
-              <input
-                type="text"
-                value={service.name}
-                onChange={(e) => {
-                  const newServices = [...formData.additionalServices];
-                  newServices[index] = { ...service, name: e.target.value };
-                  setFormData({ ...formData, additionalServices: newServices });
-                }}
-                placeholder="Service Name"
-                className="mt-1 block w-1/3 rounded-md border-gray-300 shadow-sm focus:border-primary-purple focus:ring-primary-purple sm:text-sm"
-              />
-              <input
-                type="number"
-                value={service.price}
-                onChange={(e) => {
-                  const newServices = [...formData.additionalServices];
-                  newServices[index] = { ...service, price: parseFloat(e.target.value) };
-                  setFormData({ ...formData, additionalServices: newServices });
-                }}
-                placeholder="Price"
-                className="mt-1 block w-1/3 rounded-md border-gray-300 shadow-sm focus:border-primary-purple focus:ring-primary-purple sm:text-sm"
-              />
-              <button
-                type="button"
-                onClick={() => {
-                  const newServices = formData.additionalServices.filter((_: AdditionalService, i: number) => i !== index);
-                  setFormData({ ...formData, additionalServices: newServices });
-                }}
-                className="mt-1 px-2 py-1 bg-red-500 text-white rounded"
-              >
-                Remove
-              </button>
-            </div>
-          ))}
+          {formData.additionalServices.map(
+            (service: AdditionalService, index: number) => (
+              <div key={index} className="flex gap-2">
+                <input
+                  type="text"
+                  value={service.name}
+                  onChange={(e) => {
+                    const newServices = [...formData.additionalServices];
+                    newServices[index] = { ...service, name: e.target.value };
+                    setFormData({
+                      ...formData,
+                      additionalServices: newServices,
+                    });
+                  }}
+                  placeholder="Service Name"
+                  className="mt-1 block w-1/3 rounded-md border-gray-300 shadow-sm focus:border-primary-purple focus:ring-primary-purple sm:text-sm"
+                />
+                <input
+                  type="number"
+                  value={service.price}
+                  onChange={(e) => {
+                    const newServices = [...formData.additionalServices];
+                    newServices[index] = {
+                      ...service,
+                      price: parseFloat(e.target.value),
+                    };
+                    setFormData({
+                      ...formData,
+                      additionalServices: newServices,
+                    });
+                  }}
+                  placeholder="Price"
+                  className="mt-1 block w-1/3 rounded-md border-gray-300 shadow-sm focus:border-primary-purple focus:ring-primary-purple sm:text-sm"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newServices = formData.additionalServices.filter(
+                      (_: AdditionalService, i: number) => i !== index
+                    );
+                    setFormData({
+                      ...formData,
+                      additionalServices: newServices,
+                    });
+                  }}
+                  className="mt-1 px-2 py-1 bg-red-500 text-white rounded"
+                >
+                  Remove
+                </button>
+              </div>
+            )
+          )}
           <button
             type="button"
             onClick={() => {
               setFormData({
                 ...formData,
-                additionalServices: [...formData.additionalServices, { name: "", price: 0 }],
+                additionalServices: [
+                  ...formData.additionalServices,
+                  { name: "", price: 0 },
+                ],
               });
             }}
             className="mt-2 px-4 py-2 bg-primary-purple text-white rounded"
@@ -820,7 +861,7 @@ export default function ProductForm({
                 <img
                   src={preview.url}
                   alt={`Preview ${index + 1}`}
-                  className="w-full h-32 object-cover rounded-lg"
+                  className="w-full h-full object-cover rounded-lg"
                 />
                 <button
                   type="button"
