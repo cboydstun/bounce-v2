@@ -31,21 +31,51 @@ src/
 ├── __mocks__/          # Mock files for testing
 ├── assets/             # Static assets
 ├── components/         # React components
-│   ├── blog/           # Blog-related components
-│   ├── contact/        # Contact form components
-│   ├── product/        # Product-related components
-│   ├── ui/             # Reusable UI components
-│   └── __tests__/      # Component tests
-├── contexts/           # React context providers
-├── hooks/              # Custom React hooks
-├── types/              # TypeScript type definitions
-├── utils/              # Utility functions
-└── data/               # Static data and configurations
+│   ├── blog/          # Blog-related components
+│   │   ├── BlogForm.tsx
+│   │   ├── BlogTable.tsx
+│   │   └── QuillConfig.ts
+│   ├── contact/       # Contact form components
+│   │   ├── ContactForm.tsx
+│   │   └── ContactTable.tsx
+│   ├── product/       # Product-related components
+│   │   ├── ProductDetail.tsx
+│   │   ├── ProductForm.tsx
+│   │   ├── ProductList.tsx
+│   │   └── ProductTable.tsx
+│   ├── ui/           # Reusable UI components
+│   │   ├── card.tsx
+│   │   └── LoadingSpinner.tsx
+│   └── __tests__/    # Component tests
+├── contexts/         # React context providers
+│   └── AuthContext.tsx
+├── hooks/           # Custom React hooks
+│   ├── useBlogManagement.ts
+│   ├── useContactManagement.ts
+│   └── useProductManagement.ts
+├── types/           # TypeScript type definitions
+│   ├── blog.ts
+│   ├── contact.ts
+│   ├── css.d.ts
+│   └── product.ts
+├── utils/           # Utility functions
+│   ├── analytics.ts
+│   ├── cloudinary.ts
+│   └── env.ts
+└── data/           # Static data and configurations
+    └── features.ts
 
-public/                 # Public assets
+public/             # Public assets
 ├── manifest.json
 ├── robots.txt
-└── sitemap.xml
+├── sitemap.xml
+├── logo.png
+├── logo192.png
+├── logo512.png
+├── favicon.ico
+├── apple-touch-icon.png
+├── og-image.jpg
+└── twitter-image.jpg
 ```
 
 ## Development
@@ -75,7 +105,7 @@ npm test
 
 ## Testing
 
-The project includes comprehensive test coverage using Jest and React Testing Library. Test files are located alongside their corresponding components in `__tests__` directories with the `.test.tsx` extension.
+The project includes comprehensive test coverage using Jest and React Testing Library. Test files are located alongside their corresponding components in `__tests__` directories with the `.test.tsx` extension. Mock files are stored in `__mocks__` directories for both components and project root.
 
 ## Build
 
@@ -99,3 +129,4 @@ This will generate optimized production files in the `dist` directory.
 - `jest.config.ts`: Jest test configuration
 - `vite.config.ts`: Vite build configuration
 - `vercel.json`: Vercel deployment configuration
+- `next-env.d.ts`: Next.js type declarations
