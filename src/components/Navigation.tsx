@@ -60,6 +60,11 @@ const Navigation: React.FC = () => {
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="p-2 rounded-lg text-gray-600 hover:bg-secondary-blue/5 hover:text-primary-blue transition-colors duration-300"
+              aria-label={
+                isMobileMenuOpen
+                  ? "Close navigation menu"
+                  : "Open navigation menu"
+              }
             >
               {isMobileMenuOpen ? (
                 <X className="h-6 w-6" />
