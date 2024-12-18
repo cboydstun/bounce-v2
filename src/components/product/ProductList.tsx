@@ -4,6 +4,7 @@ import { ArrowUpDown, Filter, X } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { getApiUrl } from "../../utils/env";
 import { LoadingSpinner } from "../ui/LoadingSpinner";
+import { getCurrencySymbol } from "../../utils/currency";
 
 interface Product {
   _id: string;
@@ -31,16 +32,7 @@ interface Product {
   };
 }
 
-type FilterType = "ALL" | "DRY" | "WET";
-
-const getCurrencySymbol = (currencyCode: string): string => {
-  const symbols: { [key: string]: string } = {
-    USD: "$",
-    EUR: "€",
-    GBP: "£",
-  };
-  return symbols[currencyCode] || currencyCode;
-};
+type FilterType = "ALL" | "DRY" | "WET" | "EXTRA";
 
 export default function ProductList() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -52,7 +44,6 @@ export default function ProductList() {
   const API_URL = getApiUrl();
 
   // Filter states
-  const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
   const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
   const [minSize, setMinSize] = useState<number>(0);
 
@@ -99,8 +90,6 @@ export default function ProductList() {
     fetchProducts();
   }, []);
 
-  const categories = ["ALL", ...new Set(products.map((p) => p.category))];
-
   const filteredAndSortedProducts = [...products]
     .filter((product) => {
       if (selectedType !== "ALL") {
@@ -117,8 +106,6 @@ export default function ProductList() {
         } else if (typeValue !== selectedType) return false;
       }
 
-      if (selectedCategory !== "ALL" && product.category !== selectedCategory)
-        return false;
       if (
         product.price.base < priceRange.min ||
         product.price.base > priceRange.max
@@ -250,38 +237,22 @@ export default function ProductList() {
                     Type:
                   </span>
                   <div className="flex flex-wrap gap-2">
-                    {(["ALL", "DRY", "WET"] as FilterType[]).map((type) => (
-                      <button
-                        key={type}
-                        onClick={() => setSelectedType(type)}
-                        className={`px-4 py-2 rounded-lg transition-all duration-300 font-semibold ${
-                          selectedType === type
-                            ? "bg-gradient-to-r from-blue-400 to-purple-600 text-white shadow-md"
-                            : "bg-secondary-blue/10 hover:bg-secondary-blue/20 text-primary-blue"
-                        }`}
-                      >
-                        {type}
-                      </button>
-                    ))}
+                    {(["ALL", "DRY", "WET", "EXTRA"] as FilterType[]).map(
+                      (type) => (
+                        <button
+                          key={type}
+                          onClick={() => setSelectedType(type)}
+                          className={`px-4 py-2 rounded-lg transition-all duration-300 font-semibold ${
+                            selectedType === type
+                              ? "bg-gradient-to-r from-blue-400 to-purple-600 text-white shadow-md"
+                              : "bg-secondary-blue/10 hover:bg-secondary-blue/20 text-primary-blue"
+                          }`}
+                        >
+                          {type}
+                        </button>
+                      )
+                    )}
                   </div>
-                </div>
-
-                {/* Category Filter */}
-                <div className="flex flex-col md:flex-row gap-3 md:items-center">
-                  <span className="font-semibold text-primary-blue md:min-w-24">
-                    Category:
-                  </span>
-                  <select
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="px-4 py-2 rounded-lg border-2 border-secondary-blue/20 bg-white text-primary-blue font-medium focus:border-primary-blue focus:outline-none transition-colors duration-300"
-                  >
-                    {categories.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </select>
                 </div>
 
                 {/* Price Range Filter */}

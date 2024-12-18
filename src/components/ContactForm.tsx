@@ -5,7 +5,7 @@ import { LoadingSpinner } from "./ui/LoadingSpinner";
 
 interface Specification {
   name: string;
-  value: string;
+  value: string | string[];
   _id: string;
 }
 
@@ -29,6 +29,8 @@ interface FormData {
   popcornMachine: boolean;
   cottonCandyMachine: boolean;
   snowConeMachine: boolean;
+  margaritaMachine: boolean;
+  slushyMachine: boolean;
   overnight: boolean;
   consentToContact: boolean;
 }
@@ -59,6 +61,8 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
     popcornMachine: false,
     cottonCandyMachine: false,
     snowConeMachine: false,
+    margaritaMachine: false,
+    slushyMachine: false,
     overnight: false,
     consentToContact: false,
   });
@@ -84,11 +88,14 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
 
         const filteredBouncers = response.data.filter((product: Bouncer) => {
           const typeSpec = product.specifications?.find(
-            (spec) =>
-              spec.name === "Type" &&
-              (spec.value === "WET" || spec.value === "DRY")
+            (spec) => spec.name === "Type"
           );
-          return typeSpec !== undefined;
+          if (!typeSpec) return false;
+
+          if (Array.isArray(typeSpec.value)) {
+            return typeSpec.value.some((v) => v === "WET" || v === "DRY");
+          }
+          return typeSpec.value === "WET" || typeSpec.value === "DRY";
         });
 
         setBouncers(filteredBouncers);
@@ -119,10 +126,30 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
     fetchBouncers();
   }, [API_URL, initialBouncerId]);
 
+  const formatPhoneNumber = (value: string): string => {
+    // Remove all non-digits
+    const numbers = value.replace(/\D/g, "");
+
+    // Format as (###)-###-####
+    if (numbers.length >= 10) {
+      return `(${numbers.slice(0, 3)})-${numbers.slice(3, 6)}-${numbers.slice(
+        6,
+        10
+      )}`;
+    } else if (numbers.length >= 6) {
+      return `(${numbers.slice(0, 3)})-${numbers.slice(3, 6)}-${numbers.slice(
+        6
+      )}`;
+    } else if (numbers.length >= 3) {
+      return `(${numbers.slice(0, 3)})-${numbers.slice(3)}`;
+    }
+    return numbers;
+  };
+
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
     const emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-    const phoneRegex = /^(\+?[\d\s\-()]{7,16})?$/;
+    const phoneRegex = /^\(\d{3}\)-\d{3}-\d{4}$/;
 
     if (!formData.bouncer) newErrors.bouncer = "Please select a bouncer";
 
@@ -141,7 +168,8 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
     }
 
     if (formData.phone && !phoneRegex.test(formData.phone)) {
-      newErrors.phone = "Please enter a valid phone number";
+      newErrors.phone =
+        "Please enter a valid phone number in format (###)-###-####";
     }
 
     setErrors(newErrors);
@@ -169,6 +197,8 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
         popcornMachine: false,
         cottonCandyMachine: false,
         snowConeMachine: false,
+        margaritaMachine: false,
+        slushyMachine: false,
         overnight: false,
         consentToContact: false,
       });
@@ -186,7 +216,12 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
 
-    if (name === "bouncer") {
+    if (name === "phone") {
+      setFormData((prev) => ({
+        ...prev,
+        phone: formatPhoneNumber(value),
+      }));
+    } else if (name === "bouncer") {
       const selectedBouncer = bouncers.find((b: Bouncer) => b._id === value);
       if (selectedBouncer) {
         setSelectedBouncerImage(selectedBouncer.images[0]?.url || "");
@@ -248,9 +283,12 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
           >
             <option value="">Choose a bouncer...</option>
             {bouncers.map((bouncer) => {
-              const type = bouncer.specifications.find(
+              const typeSpec = bouncer.specifications.find(
                 (spec) => spec.name === "Type"
-              )?.value;
+              );
+              const type = Array.isArray(typeSpec?.value)
+                ? typeSpec.value.join("/")
+                : typeSpec?.value;
               return (
                 <option key={bouncer._id} value={bouncer._id}>
                   {bouncer.name} ({type})
@@ -355,7 +393,7 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
             value={formData.phone}
             onChange={handleChange}
             className="w-full rounded-lg border-2 border-secondary-blue/20 shadow-sm focus:border-primary-purple focus:ring-primary-purple p-3"
-            placeholder="Best number to reach you"
+            placeholder="(###)-###-####"
             autoComplete="tel"
           />
           {errors.phone && (
@@ -377,6 +415,8 @@ const ContactForm = ({ initialBouncerId }: ContactFormProps) => {
             { id: "popcornMachine", label: "🍿 Popcorn Machine" },
             { id: "cottonCandyMachine", label: "🍭 Cotton Candy" },
             { id: "snowConeMachine", label: "🧊 Snow Cones" },
+            { id: "margaritaMachine", label: "🍹 Margarita Machine" },
+            { id: "slushyMachine", label: "🥤 Slushy Machine" },
             { id: "overnight", label: "🌙 Overnight Rental" },
           ].map(({ id, label }) => (
             <div

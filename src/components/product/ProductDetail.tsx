@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import ContactForm from "../ContactForm";
 import { getApiUrl } from "../../utils/env";
 import { LoadingSpinner } from "../ui/LoadingSpinner";
+import { getCurrencySymbol } from "../../utils/currency";
 
 interface Product {
   _id: string;
@@ -174,7 +175,8 @@ export default function ProductDetail() {
                     {product.name}
                   </h1>
                   <p className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 text-transparent bg-clip-text mb-6">
-                    {product.price.currency} {product.price.base.toFixed(2)}
+                    {getCurrencySymbol(product.price.currency)}
+                    {product.price.base.toFixed(2)}
                   </p>
                   <div className="prose max-w-none text-gray-600 text-lg">
                     <p>{product.description}</p>
