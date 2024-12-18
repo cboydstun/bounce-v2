@@ -312,6 +312,11 @@ export default function ProductList() {
               <Link
                 key={product._id}
                 to={`/products/${product.slug}`}
+                aria-label={`View details for ${
+                  product.name
+                } - ${getCurrencySymbol(
+                  product.price.currency
+                )}${product.price.base.toFixed(2)}`}
                 className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] border-2 border-transparent hover:border-secondary-blue/20"
               >
                 <div className="aspect-w-16 aspect-h-9 relative overflow-hidden">

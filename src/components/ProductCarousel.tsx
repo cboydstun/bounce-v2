@@ -157,18 +157,24 @@ const ProductCarousel = () => {
 
           {/* Page Dots */}
           {pageCount > 1 && (
-            <div className="flex justify-center gap-2 mt-8">
+            <div className="flex justify-center gap-4 mt-8">
               {[...Array(pageCount)].map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentPage(index)}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    index === currentPage
-                      ? "bg-primary-blue w-4"
-                      : "bg-gray-300"
+                  className={`w-12 h-12 flex items-center justify-center p-4 transition-all hover:bg-gray-100 rounded-full ${
+                    index === currentPage ? "bg-white/10" : ""
                   }`}
                   aria-label={`Go to page ${index + 1}`}
-                />
+                >
+                  <span
+                    className={`w-2 h-2 rounded-full transition-all ${
+                      index === currentPage
+                        ? "bg-primary-blue w-4"
+                        : "bg-gray-300"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
           )}

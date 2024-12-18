@@ -38,9 +38,9 @@ const Footer: React.FC = () => {
 
           {/* Quick Links */}
           <div className="space-y-6">
-            <h4 className="text-xl font-bold text-primary-purple">
+            <h2 className="text-xl font-bold text-primary-purple">
               Quick Links
-            </h4>
+            </h2>
             <ul className="space-y-4">
               {[
                 { to: "/", label: "Home" },
@@ -63,7 +63,7 @@ const Footer: React.FC = () => {
 
           {/* Contact Info */}
           <div className="space-y-6">
-            <h4 className="text-xl font-bold text-primary-purple">Contact</h4>
+            <h2 className="text-xl font-bold text-primary-purple">Contact</h2>
             <ul className="space-y-4">
               <li>
                 <a
@@ -98,7 +98,7 @@ const Footer: React.FC = () => {
 
           {/* Social Links */}
           <div className="space-y-6">
-            <h4 className="text-xl font-bold text-primary-purple">Follow Us</h4>
+            <h2 className="text-xl font-bold text-primary-purple">Follow Us</h2>
             <div className="flex gap-4">
               {[
                 { icon: Facebook, href: "#", label: "Facebook" },
