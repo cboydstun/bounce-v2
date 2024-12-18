@@ -141,13 +141,13 @@ const ProductCarousel = () => {
                       to={`/products/${product.slug}`}
                       className="flex-1 bg-primary-blue text-white text-center py-3 px-4 rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-300 shadow-md hover:shadow-lg"
                     >
-                      More Info
+                      {product.name} Info
                     </Link>
                     <Link
                       to="/contact"
                       className="flex-1 bg-gradient-to-r from-blue-400 to-purple-600 text-white text-center py-3 px-4 rounded-lg font-semibold hover:from-blue-500 hover:to-purple-700 transition-all duration-300 shadow-md hover:shadow-lg"
                     >
-                      Contact Now
+                      Book {product.name}
                     </Link>
                   </div>
                 </div>
