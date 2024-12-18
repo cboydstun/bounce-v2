@@ -9,8 +9,7 @@ const HeroSection: React.FC = () => {
       <div
         className="absolute inset-0 w-full h-full"
         style={{
-          backgroundImage:
-            'url("https://media3.giphy.com/media/wZQ8RoZAfj82CQFQyW/giphy.gif")',
+          backgroundImage: 'url("/assets/hero-background.gif")',
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
