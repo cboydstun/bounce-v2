@@ -9,7 +9,8 @@ const HeroSection: React.FC = () => {
       <div
         className="absolute inset-0 w-full h-full"
         style={{
-          backgroundImage: 'url("/assets/hero-background.gif")',
+          backgroundImage:
+            'url("/assets/hero-background.gif"), url("/assets/hero-background.webp")',
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

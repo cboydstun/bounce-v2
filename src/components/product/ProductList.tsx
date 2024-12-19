@@ -336,6 +336,11 @@ export default function ProductList() {
                   <h2 className="text-xl font-bold text-primary-blue mb-2">
                     {product.name}
                   </h2>
+                  <p className="text-gray-600 mb-4">
+                    {product?.dimensions?.length} W x{" "}
+                    {product?.dimensions?.width} L x{" "}
+                    {product?.dimensions?.height} H {product?.dimensions?.unit}
+                  </p>
                   <p className="text-gray-600 mb-4 line-clamp-2">
                     {product.description}
                   </p>

@@ -136,6 +136,11 @@ const ProductCarousel = () => {
                   <p className="text-gray-600 text-lg mb-4">
                     ${product.price.base}/{product.rentalDuration}
                   </p>
+                  <p className="text-gray-600 mb-4">
+                    Size: {product?.dimensions?.length} W x{" "}
+                    {product?.dimensions?.width} L x{" "}
+                    {product?.dimensions?.height} H {product?.dimensions?.unit}
+                  </p>
                   <div className="flex gap-3">
                     <Link
                       to={`/products/${product.slug}`}
